@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Media, MediaType } from "../utils/media.type";
 
 interface StoreState {
-  currentView: "movies" | "shows";
+  currentMediaType: MediaType;
   popularMovies: [];
   popularShows: [];
   movieDetails: null;
@@ -12,7 +13,7 @@ interface Action {
   payload: any;
 }
 const initialState: StoreState = {
-  currentView: "movies",
+  currentMediaType: Media.movies, //show movies initially
   popularMovies: [],
   popularShows: [],
   movieDetails: null,
@@ -23,35 +24,39 @@ const movieSlice = createSlice({
   name: "media",
   initialState,
   reducers: {
-    setCurrentView(state: StoreState, action: Action) {
-      state.currentView = action.payload;
+    setCurrentMediaType(state: StoreState, action: Action) {
+      state.currentMediaType = action.payload;
     },
-    setPopularMovies(state: StoreState, action: Action) {
-      state.popularMovies = action.payload;
+    setPopularMedia(state: StoreState, action: Action) {
+      if (state.currentMediaType === Media.shows) {
+        state.popularShows = action.payload;
+      } else {
+        state.popularMovies = action.payload;
+      }
     },
-    setMovieDetails(state: StoreState, action: Action) {
-      state.movieDetails = action.payload;
-    },
-    setShowDetails(state: StoreState, action: Action) {
-      state.showDetails = action.payload;
-    },
-    setPopularShows(state: StoreState, action: Action) {
-      state.popularShows = action.payload;
+    setMediaDetails(state: StoreState, action: Action) {
+      if (state.currentMediaType === Media.shows) {
+        state.showDetails = action.payload;
+      } else {
+        state.movieDetails = action.payload;
+      }
     },
   },
 });
 
-export const {
-  setCurrentView,
-  setPopularMovies,
-  setMovieDetails,
-  setShowDetails,
-} = movieSlice.actions;
+export const { setCurrentMediaType, setPopularMedia, setMediaDetails } =
+  movieSlice.actions;
 
-export const selectCurrentView = (state: StoreState) => state.currentView;
-export const selectPopularShows = (state: StoreState) => state.popularShows;
-export const selectPopularMovies = (state: StoreState) => state.popularMovies;
-export const selectMovieDetails = (state:StoreState) => state.movieDetails;
-export const selectShowDetails = (state:StoreState) => state.showDetails;
+export const selectCurrentMediaType = (state: StoreState) =>
+  state.currentMediaType;
+
+export const selectPopularMedia = (state: StoreState) =>
+  state.currentMediaType === Media.shows
+    ? state.popularShows
+    : state.popularMovies;
+    
+export const selectMediaDetails = (state: StoreState) => state.currentMediaType === Media.shows
+? state.showDetails
+: state.movieDetails;
 
 export default movieSlice.reducer;

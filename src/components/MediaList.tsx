@@ -1,39 +1,72 @@
-import React , { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectPopularMovies, setPopularMovies } from "../store/mediaSlice"; // Import actions and selectors
-
-const API_KEY = process.env.REACT_APP_MOVIE_DB_API_KEY;
+import {
+  selectPopularMedia,
+  selectCurrentMediaType,
+  setPopularMedia,
+} from "../store/mediaSlice"; 
+import { configPath, getImagePath, getMediaListPathByType } from "../utils/urlComposer";
 
 const MediaList = () => {
   const dispatch = useDispatch();
-  const popularMovies = useSelector(selectPopularMovies);
+  const popularMedia = useSelector(selectPopularMedia);
+  const currentMediaType = useSelector(selectCurrentMediaType);
+  const [mediaImageBasePath, setMediaImageBasePath] = useState("");
 
   useEffect(() => {
-    // Fetch popular movies (you can use axios, fetch, etc.)
-    const fetchPopularMovies = async () => {
+    //Get config and compose image base path
+    const fetchConfig = async () => {
       try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
-        );
+        const response = await fetch(configPath);
         const data = await response.json();
-        dispatch(setPopularMovies(data.results));
+        setMediaImageBasePath(
+          data?.images.secure_base_url + data?.images.poster_sizes.slice(-1) // last array of poster size is "original" size
+        );
+        console.log(mediaImageBasePath);
+      } catch (error) {
+        console.error("Error fetching config: ", error);
+      }
+    };
+    fetchConfig();
+  }, [mediaImageBasePath]);
+
+  useEffect(() => {
+    // Fetch popular movies or popular tv shows
+    const fetchPopularMedia = async () => {
+      try {
+        const response = await fetch(getMediaListPathByType(currentMediaType));
+        const data = await response.json();
+        dispatch(setPopularMedia(data.results));
       } catch (error) {
         console.error("Error fetching popular movies:", error);
       }
     };
-
-    fetchPopularMovies();
+    //don't fetch unless store is empty
+    !popularMedia.length && fetchPopularMedia();
   }, [dispatch]);
 
-  console.log(popularMovies);
-  
   return (
     <div>
-      <h2>Popular Movies</h2>
+      <h2>Popular {currentMediaType}</h2>
       <ul>
-        {popularMovies?.map((movie: {id:string, title: string}) => (
-          <li key={movie?.id}>{movie?.title}</li>
-        ))}
+        {popularMedia?.map(
+          (media: {
+            id: string;
+            title?: string; 
+            name?: string;
+            vote_average: string;
+            backdrop_path: string;
+          }) => (
+            <li key={media?.id}>
+              {media?.title || media?.name} {media?.vote_average}
+              <img
+                src={getImagePath(mediaImageBasePath, media.backdrop_path)}
+                alt="Cover"
+                loading="lazy"
+              ></img>
+            </li>
+          )
+        )}
       </ul>
     </div>
   );
