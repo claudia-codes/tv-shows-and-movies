@@ -1,0 +1,32 @@
+.mediaCarousel img, .mediaCarousel .card {
+    border-radius: 0;
+}
+
+.mediaCarousel, .mediaCarousel-skeleton{
+    position: relative;
+    height: 85vh;
+}
+
+.mediaCarousel-cardBody {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+}
+
+.mediaCarousel-actions:hover {
+    opacity: 1;
+    transition: opacity 1s ease-in;
+}
+
+.mediaCarousel-actions {
+    position: absolute;
+    top: 42vh;
+    left: 30%;
+    transform: translate(-42vh, -30%);
+
+}
+
+.mediaCarousel .card {
+    border: 0px
+}

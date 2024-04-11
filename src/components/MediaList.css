@@ -1,0 +1,20 @@
+.mediaList-image {
+    max-width: 200px;
+}
+.mediaList-image{
+    text-overflow: ellipsis;
+    max-height: 200px;
+}
+.mediaList-row{
+    max-height: 150px;
+}
+.mediaList-row .row{
+    align-items: center;
+}
+.mediaList-shortOverview {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+            line-clamp: 2; 
+    -webkit-box-orient: vertical;
+}

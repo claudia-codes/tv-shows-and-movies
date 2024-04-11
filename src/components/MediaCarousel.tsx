@@ -1,18 +1,22 @@
 import Carousel from "react-bootstrap/Carousel";
 import { MediaItem } from "../utils/media.type";
-import { Card } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { getImagePath } from "../utils/urlComposer";
 import { useSelector } from "react-redux";
-import { selectMediaImageBasePath } from "../store/mediaSlice"
+import { selectMediaImageBasePath } from "../store/mediaSlice";
+import Skeleton from "react-loading-skeleton";
+import { useState } from "react";
+import "./MediaCarousel.css";
+
 interface Props {
   mediaList: MediaItem[];
 }
 
 const MediaCarousel: React.FunctionComponent<Props> = ({ mediaList }) => {
   const mediaImageBasePath = useSelector(selectMediaImageBasePath);
-
+  const [imageLoaded, setImageLoaded] = useState(false);
   return (
-    <Carousel>
+    <Carousel data-bs-theme="dark" className="mediaCarousel">
       {mediaList?.map((media: MediaItem) => (
         <Carousel.Item>
           <Card>
@@ -20,10 +24,24 @@ const MediaCarousel: React.FunctionComponent<Props> = ({ mediaList }) => {
               variant="top"
               src={getImagePath(mediaImageBasePath, media.backdrop_path)}
               alt={media?.title || media?.name}
+              onLoad={() => setImageLoaded(true)}
             />
-            <Card.Body>
-              <Card.Title>{media?.title || media?.name} </Card.Title>
-              <Card.Text>{media?.vote_average}</Card.Text>
+
+            {!imageLoaded && <Skeleton className="mediaCarousel-skeleton" />}
+          
+            <Card.Body className="mediaCarousel-cardBody">
+              <Container>
+                <Row className="mediaCarousel-actions">
+                  <Col >
+                    <Card.Text>
+                      <h1>{media?.title || media?.name} </h1>
+                    </Card.Text>
+                  </Col>
+                  <Col md={10}>
+                    <Button variant="outline-link">Show more &gt;</Button>
+                  </Col>
+                </Row>
+              </Container>
             </Card.Body>
           </Card>
         </Carousel.Item>

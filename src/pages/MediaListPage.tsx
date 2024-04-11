@@ -11,10 +11,10 @@ import {
   configPath,
   getMediaListPathByType,
 } from "../utils/urlComposer";
-import MediaDropdown from "../components/MediaDropdown";
 import MediaCarousel from "../components/MediaCarousel";
+import MediaList from "../components/MediaList";
 
-const MediaList = () => {
+const MediaListPage = () => {
   const dispatch = useDispatch();
   const popularMedia = useSelector(selectPopularMedia);
   const currentMediaType = useSelector(selectCurrentMediaType);
@@ -51,11 +51,10 @@ const MediaList = () => {
 
   return (
     <div>
-      <h2>Popular {currentMediaType}</h2>
-      <MediaDropdown mediaType={currentMediaType}></MediaDropdown>
       <MediaCarousel mediaList={popularMedia}></MediaCarousel>
+      <MediaList mediaList={popularMedia}></MediaList>
     </div>
   );
 };
 
-export default MediaList;
+export default MediaListPage;
