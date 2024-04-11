@@ -1,26 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import moviesReducer from "./store/mediaSlice";
+import MediaList from "./components/MediaList";
+
+const store = configureStore({
+  reducer: moviesReducer
+});
 
 function App() {
-  useEffect(() => {
-    const API_KEY = process.env.REACT_APP_MOVIE_DB_API_KEY;
-
-    const fetchPopularMovies = async () => {
-      try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
-        );
-        const data = await response.json();
-        console.log(data);
-      } catch (error) {
-        console.error("Error fetching popular movies:", error);
-      }
-    };
-    fetchPopularMovies()
-  }, []);
   return (
-    <div className="App">
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <MediaList></MediaList>
+      </div>
+    </Provider>
   );
 }
 
