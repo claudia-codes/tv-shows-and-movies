@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Media, MediaType } from "../utils/media.type";
+import { Media, MediaItemDetails, MediaType } from "../utils/media.type";
 
 interface StoreState {
   currentMediaType: MediaType;
   popularMovies: [];
   popularShows: [];
-  movieDetails: null;
-  showDetails: null;
+  movieDetails: MediaItemDetails | null;
+  showDetails: MediaItemDetails | null;
+  mediaImageBasePath: string;
 }
 
 interface Action {
@@ -18,12 +19,18 @@ const initialState: StoreState = {
   popularShows: [],
   movieDetails: null,
   showDetails: null,
+  mediaImageBasePath: "",
 };
 
 const movieSlice = createSlice({
   name: "media",
   initialState,
   reducers: {
+    setMediaImageBasePath(state: StoreState, action: Action) {
+      state.mediaImageBasePath =
+        action.payload?.images.secure_base_url +
+        action.payload?.images.poster_sizes.slice(-1); // last array of poster size is "original" size
+    },
     setCurrentMediaType(state: StoreState, action: Action) {
       state.currentMediaType = action.payload;
     },
@@ -44,7 +51,7 @@ const movieSlice = createSlice({
   },
 });
 
-export const { setCurrentMediaType, setPopularMedia, setMediaDetails } =
+export const { setCurrentMediaType, setPopularMedia, setMediaDetails, setMediaImageBasePath } =
   movieSlice.actions;
 
 export const selectCurrentMediaType = (state: StoreState) =>
@@ -54,9 +61,13 @@ export const selectPopularMedia = (state: StoreState) =>
   state.currentMediaType === Media.shows
     ? state.popularShows
     : state.popularMovies;
-    
-export const selectMediaDetails = (state: StoreState) => state.currentMediaType === Media.shows
-? state.showDetails
-: state.movieDetails;
 
-export default movieSlice.reducer;
+export const selectMediaDetails = (state: StoreState) =>
+  state.currentMediaType === Media.shows
+    ? state.showDetails
+    : state.movieDetails;
+
+export const selectMediaImageBasePath = (state: StoreState) =>
+  state.mediaImageBasePath;
+
+export default movieSlice.reducer

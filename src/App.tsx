@@ -1,9 +1,10 @@
 import React from "react";
 import "./App.css";
+import 'bootstrap/dist/css/bootstrap.css';
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import moviesReducer from "./store/mediaSlice";
-import MediaList from "./components/MediaList";
+import MediaList from "./pages/MediaList";
 
 const store = configureStore({
   reducer: moviesReducer

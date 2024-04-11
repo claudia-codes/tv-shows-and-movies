@@ -1,17 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectPopularMedia,
   selectCurrentMediaType,
   setPopularMedia,
-} from "../store/mediaSlice"; 
-import { configPath, getImagePath, getMediaListPathByType } from "../utils/urlComposer";
+  setMediaImageBasePath,
+  selectMediaImageBasePath,
+} from "../store/mediaSlice";
+import {
+  configPath,
+  getMediaListPathByType,
+} from "../utils/urlComposer";
+import MediaDropdown from "../components/MediaDropdown";
+import MediaCarousel from "../components/MediaCarousel";
 
 const MediaList = () => {
   const dispatch = useDispatch();
   const popularMedia = useSelector(selectPopularMedia);
   const currentMediaType = useSelector(selectCurrentMediaType);
-  const [mediaImageBasePath, setMediaImageBasePath] = useState("");
+  const mediaImageBasePath = useSelector(selectMediaImageBasePath);
 
   useEffect(() => {
     //Get config and compose image base path
@@ -19,16 +26,13 @@ const MediaList = () => {
       try {
         const response = await fetch(configPath);
         const data = await response.json();
-        setMediaImageBasePath(
-          data?.images.secure_base_url + data?.images.poster_sizes.slice(-1) // last array of poster size is "original" size
-        );
-        console.log(mediaImageBasePath);
+        dispatch(setMediaImageBasePath(data));
       } catch (error) {
         console.error("Error fetching config: ", error);
       }
     };
     fetchConfig();
-  }, [mediaImageBasePath]);
+  }, [dispatch, mediaImageBasePath]);
 
   useEffect(() => {
     // Fetch popular movies or popular tv shows
@@ -41,33 +45,15 @@ const MediaList = () => {
         console.error("Error fetching popular movies:", error);
       }
     };
-    //don't fetch unless store is empty
-    !popularMedia.length && fetchPopularMedia();
-  }, [dispatch]);
+
+    !popularMedia.length && fetchPopularMedia(); // refetch data only if they don't exist in store
+  }, [dispatch, currentMediaType, popularMedia.length]);
 
   return (
     <div>
       <h2>Popular {currentMediaType}</h2>
-      <ul>
-        {popularMedia?.map(
-          (media: {
-            id: string;
-            title?: string; 
-            name?: string;
-            vote_average: string;
-            backdrop_path: string;
-          }) => (
-            <li key={media?.id}>
-              {media?.title || media?.name} {media?.vote_average}
-              <img
-                src={getImagePath(mediaImageBasePath, media.backdrop_path)}
-                alt="Cover"
-                loading="lazy"
-              ></img>
-            </li>
-          )
-        )}
-      </ul>
+      <MediaDropdown mediaType={currentMediaType}></MediaDropdown>
+      <MediaCarousel mediaList={popularMedia}></MediaCarousel>
     </div>
   );
 };
