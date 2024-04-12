@@ -7,9 +7,10 @@ import { NavDropdown } from "react-bootstrap";
 
 interface Props {
   mediaType: MediaType;
+  className: string;
 }
 
-const MediaDropdown: React.FunctionComponent<Props> = ({ mediaType }) => {
+const MediaDropdown: React.FunctionComponent<Props> = ({ mediaType,...rest }) => {
   const dispatch = useDispatch();
   const handleClick = useCallback(
     (newMediaType: MediaType) => {
@@ -19,7 +20,7 @@ const MediaDropdown: React.FunctionComponent<Props> = ({ mediaType }) => {
   );
 
   return (
-    <NavDropdown title={mediaType}>
+    <NavDropdown {...rest} title={mediaType}>
       <NavDropdown.Item onClick={() => handleClick(Media.movies)} href="#">
         {Media.movies}
       </NavDropdown.Item>

@@ -1,6 +1,5 @@
-import { Card, Button } from "react-bootstrap";
+import { Card} from "react-bootstrap";
 import { MediaItem } from "../utils/media.type";
-import { useNavigate } from "react-router-dom";
 import "./MediaDetails.css";
 
 interface Props {
@@ -8,11 +7,6 @@ interface Props {
   mediaPath: string;
 }
 const MediaDetails: React.FunctionComponent<Props> = ({ media, mediaPath }) => {
-  const navigate = useNavigate();
-  const navigateBack = () => {
-    navigate(-1);
-  };
-
   return (
     <>
       {media && (
@@ -28,9 +22,6 @@ const MediaDetails: React.FunctionComponent<Props> = ({ media, mediaPath }) => {
             </Card.Title>
             <Card.Text>{media?.overview}</Card.Text>
             <Card.Text>Average score: {media?.vote_average}</Card.Text>
-          <Button variant="outline-secondary" onClick={navigateBack}>
-            Back
-          </Button>
           </Card.Body>
         </Card>
       )}

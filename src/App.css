@@ -5,3 +5,7 @@
 .dropdown {
   color: white;
 }
+
+.invisible {
+  visibility: hidden;
+}
