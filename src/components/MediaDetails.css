@@ -1,0 +1,14 @@
+.mediaDetails-card img {
+    max-height: 90vh; 
+    border-radius: 0;
+}
+
+mediaDetails-card {
+    border: 0px;
+    border-radius: 0;
+    position: relative;
+}
+.mediaDetails-card .mediaDetails-body {
+    position: absolute;
+    /* bottom: 0; */
+}

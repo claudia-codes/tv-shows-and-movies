@@ -9,17 +9,32 @@ export const getMediaListPathByType = (mediaType: "movies" | "shows") => {
   return mediaType === "shows" ? popularShowsPath : popularMoviesPath;
 };
 
-const popularMovieDetailsPath = (movie_id: string) =>
-  `${BASE_URL}/movie/${movie_id}?api_key=${API_KEY}`;
-const popularShowDetailsPath = (show_id: string) =>
-  `${BASE_URL}/tv/${show_id}?api_key=${API_KEY}`;
+const popularMovieDetailsPath = (media_id: string) =>
+  `${BASE_URL}/movie/${media_id}?api_key=${API_KEY}`;
+const popularShowDetailsPath = (media_id: string) =>
+  `${BASE_URL}/tv/${media_id}?api_key=${API_KEY}`;
 
-export const getMediaDetailsPathByType = (mediaType: "movies" | "shows") => {
+export const getMediaDetailsPathByType = (mediaType: "movies" | "shows", media_id: string) => {
   //defaults to movies
   return mediaType === "shows"
-    ? popularShowDetailsPath
-    : popularMovieDetailsPath;
+    ? popularShowDetailsPath(media_id)
+    : popularMovieDetailsPath(media_id);
 };
 
-export const getImagePath = (composedPath: string, backdrop_path: string) =>
-  `${composedPath}${backdrop_path}/?api_key=${API_KEY}`;
+const popularMovieReccomendationsPath = (media_id: string) =>
+  `${BASE_URL}/movie/${media_id}/recommendations?api_key=${API_KEY}`;
+const popularShowReccomendationsPath = (show_id: string) =>
+  `${BASE_URL}/tv/${show_id}/recommendations?api_key=${API_KEY}`;
+
+export const getMediaReccomendationsPathByType = (mediaType: "movies" | "shows", media_id: string) => {
+  //defaults to movies
+  return mediaType === "shows"
+    ? popularShowReccomendationsPath(media_id)
+    : popularMovieReccomendationsPath(media_id);
+};
+
+export const getImagePath = (
+  composedPath: string,
+  backdrop_path: string | undefined
+) =>
+composedPath && backdrop_path ? `${composedPath}${backdrop_path}/?api_key=${API_KEY}` : "";

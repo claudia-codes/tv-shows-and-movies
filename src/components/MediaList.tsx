@@ -4,6 +4,8 @@ import { Col, Container, Row, Image, Button } from "react-bootstrap";
 import { getImagePath } from "../utils/urlComposer";
 import { useSelector } from "react-redux";
 import { selectMediaImageBasePath } from "../store/mediaSlice";
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./MediaList.css";
 
@@ -12,6 +14,14 @@ interface Props {
 }
 const MediaList: React.FunctionComponent<Props> = ({ mediaList }) => {
   const mediaImageBasePath = useSelector(selectMediaImageBasePath);
+  const navigate = useNavigate();
+
+  const handleClick = useCallback(
+    (mediaId: string) => {
+      navigate(`details/${mediaId}`);
+    },
+    [navigate]
+  );
 
   return (
     <ListGroup variant="flush" data-bs-theme="dark">
@@ -31,7 +41,12 @@ const MediaList: React.FunctionComponent<Props> = ({ mediaList }) => {
                 <div>Average votes: {media?.vote_average}</div>
               </Col>
               <Col>
-                <Button variant="outline-secondary">Details &gt;</Button>{" "}
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => handleClick(media?.id)}
+                >
+                  Details &gt;
+                </Button>{" "}
               </Col>
             </Row>
           </Container>

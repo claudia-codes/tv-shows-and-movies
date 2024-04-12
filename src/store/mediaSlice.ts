@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Media, MediaItemDetails, MediaType } from "../utils/media.type";
+import { Media, MediaType } from "../utils/media.type";
 
 interface StoreState {
   currentMediaType: MediaType;
   popularMovies: [];
   popularShows: [];
-  movieDetails: MediaItemDetails | null;
-  showDetails: MediaItemDetails | null;
   mediaImageBasePath: string;
 }
 
@@ -17,8 +15,6 @@ const initialState: StoreState = {
   currentMediaType: Media.movies, //show movies initially
   popularMovies: [],
   popularShows: [],
-  movieDetails: null,
-  showDetails: null,
   mediaImageBasePath: "",
 };
 
@@ -41,18 +37,15 @@ const movieSlice = createSlice({
         state.popularMovies = action.payload;
       }
     },
-    setMediaDetails(state: StoreState, action: Action) {
-      if (state.currentMediaType === Media.shows) {
-        state.showDetails = action.payload;
-      } else {
-        state.movieDetails = action.payload;
-      }
-    },
+    
   },
 });
 
-export const { setCurrentMediaType, setPopularMedia, setMediaDetails, setMediaImageBasePath } =
-  movieSlice.actions;
+export const {
+  setCurrentMediaType,
+  setPopularMedia,
+  setMediaImageBasePath,
+} = movieSlice.actions;
 
 export const selectCurrentMediaType = (state: StoreState) =>
   state.currentMediaType;
@@ -62,12 +55,7 @@ export const selectPopularMedia = (state: StoreState) =>
     ? state.popularShows
     : state.popularMovies;
 
-export const selectMediaDetails = (state: StoreState) =>
-  state.currentMediaType === Media.shows
-    ? state.showDetails
-    : state.movieDetails;
-
 export const selectMediaImageBasePath = (state: StoreState) =>
   state.mediaImageBasePath;
 
-export default movieSlice.reducer
+export default movieSlice.reducer;

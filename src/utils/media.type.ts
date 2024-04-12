@@ -4,12 +4,6 @@ export enum Media {
 }
 export type MediaType = Media.movies | Media.shows;
 
-export interface MediaItemDetails {
-  title: string;
-  overview: string;
-  backdrop_path: string;
-}
-
 export interface MediaItem {
   id: string;
   title?: string;
