@@ -9,6 +9,10 @@
 - This should contain at least: A image, the title, the overview.
 - The user should be able to see similar tv shows or movies in a section in the detail view.
 
+## Improvements
+- [Elevate Image Path Retrieval](https://github.com/claudia-codes/tv-shows-and-movies/issues/1)
+
+  
 ## Available Scripts
 
 In the project directory, you can run:
