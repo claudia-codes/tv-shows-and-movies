@@ -21,16 +21,16 @@ export const getMediaDetailsPathByType = (mediaType: "movies" | "shows", media_i
     : popularMovieDetailsPath(media_id);
 };
 
-const popularMovieReccomendationsPath = (media_id: string) =>
-  `${BASE_URL}/movie/${media_id}/recommendations?api_key=${API_KEY}`;
-const popularShowReccomendationsPath = (show_id: string) =>
-  `${BASE_URL}/tv/${show_id}/recommendations?api_key=${API_KEY}`;
+const similarMoviesPath = (media_id: string) =>
+  `${BASE_URL}/movie/${media_id}/similar?api_key=${API_KEY}`;
+const similarShowsPath = (show_id: string) =>
+  `${BASE_URL}/tv/${show_id}/similar?api_key=${API_KEY}`;
 
-export const getMediaReccomendationsPathByType = (mediaType: "movies" | "shows", media_id: string) => {
+export const getSimilarMediaPath = (mediaType: "movies" | "shows", media_id: string) => {
   //defaults to movies
   return mediaType === "shows"
-    ? popularShowReccomendationsPath(media_id)
-    : popularMovieReccomendationsPath(media_id);
+    ? similarShowsPath(media_id)
+    : similarMoviesPath(media_id);
 };
 
 export const getImagePath = (

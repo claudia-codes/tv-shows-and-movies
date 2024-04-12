@@ -1,10 +1,10 @@
-# Popular Movies and TV Shows React App
+# Popular Movies and TV Shows
 
 1. TV Shows and Movie list
 - Displays two lists: the most popular tv shows and movies. Use the top dropdown to toggle between views. There is a carousel list view and a vertical list to showcase the media
 - Every list item displays an image, the title and the vote average fields.
 
-2.TV Show and Movie Detail
+2. TV Show and Movie Detail
 - When an item is clicked on the list, it creates a tv show or movie detail view on a separate screen.
 - This should contain at least: A image, the title, the overview.
 - The user should be able to see similar tv shows or movies in a section in the detail view.
@@ -20,11 +20,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 

@@ -2,7 +2,7 @@ import MediaDetails from "../components/MediaDetails";
 import {
   getImagePath,
   getMediaDetailsPathByType,
-  getMediaReccomendationsPathByType,
+  getSimilarMediaPath,
 } from "../utils/urlComposer";
 import { useSelector } from "react-redux";
 import {
@@ -44,7 +44,7 @@ const MediaDetailsPage: React.FunctionComponent<Props> = () => {
       try {
         if (mediaId) {
           const response = await fetch(
-            getMediaReccomendationsPathByType(currentMediaType, mediaId)
+            getSimilarMediaPath(currentMediaType, mediaId)
           );
           const data = await response.json();
           setRecommendedMedia(data.results);
