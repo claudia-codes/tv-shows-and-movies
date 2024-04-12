@@ -1,6 +1,13 @@
-# Getting Started with Create React App
+# Popular Movies and TV Shows React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. TV Shows and Movie list
+- Displays two lists: the most popular tv shows and movies. Use the top dropdown to toggle between views. There is a carousel list view and a vertical list to showcase the media
+- Every list item displays an image, the title and the vote average fields.
+
+2.TV Show and Movie Detail
+- When an item is clicked on the list, it creates a tv show or movie detail view on a separate screen.
+- This should contain at least: A image, the title, the overview.
+- The user should be able to see similar tv shows or movies in a section in the detail view.
 
 ## Available Scripts
 
