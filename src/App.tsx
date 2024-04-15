@@ -10,15 +10,20 @@ import MediaListPage from "./pages/MediaListPage";
 import MainNavBar from "./components/MainNavBar";
 import MediaDetailsPage from "./pages/MediaDetailsPage";
 import ErrorModal from "./components/ErrorModal";
+import withConfig from "./components/withConfig";
 
 const store = configureStore({
   reducer: moviesReducer,
 });
 const API_KEY = process.env.REACT_APP_MOVIE_DB_API_KEY;
+
 const error = {
   title: "Missing Movie DB API Key",
   message: "Please provide a valid movie DB API Key in order to access the application."
 }
+
+const MediaListPageWithConfig = withConfig(MediaListPage)
+const MediaDetailsPageWithConfig = withConfig(MediaDetailsPage)
 
 function App() {
   return (
@@ -28,8 +33,8 @@ function App() {
           <div className="App">
             <MainNavBar></MainNavBar>
             <Routes>
-              <Route path="/" Component={MediaListPage} />
-              <Route path="/details/:mediaId" Component={MediaDetailsPage} />
+              <Route path="/" Component={MediaListPageWithConfig} />
+              <Route path="/details/:mediaId" Component={MediaDetailsPageWithConfig} />
             </Routes>
           </div>
         </Router>

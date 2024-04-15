@@ -18,21 +18,6 @@ const MediaListPage = () => {
   const dispatch = useDispatch();
   const popularMedia = useSelector(selectPopularMedia);
   const currentMediaType = useSelector(selectCurrentMediaType);
-  const mediaImageBasePath = useSelector(selectMediaImageBasePath);
-
-  useEffect(() => {
-    //Get config and compose image base path
-    const fetchConfig = async () => {
-      try {
-        const response = await fetch(configPath);
-        const data = await response.json();
-        dispatch(setMediaImageBasePath(data));
-      } catch (error) {
-        console.error("Error fetching config: ", error);
-      }
-    };
-    fetchConfig();
-  }, [dispatch, mediaImageBasePath]);
 
   useEffect(() => {
     // Fetch popular movies or popular tv shows
