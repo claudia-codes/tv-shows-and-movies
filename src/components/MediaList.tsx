@@ -18,7 +18,7 @@ const MediaList: React.FunctionComponent<Props> = ({ mediaList }) => {
 
   const handleClick = useCallback(
     (mediaId: string) => {
-      navigate(`details/${mediaId}`);
+      navigate(`/details/${mediaId}`);
     },
     [navigate]
   );

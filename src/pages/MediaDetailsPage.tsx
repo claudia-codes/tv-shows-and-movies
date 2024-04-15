@@ -19,7 +19,7 @@ const MediaDetailsPage: React.FunctionComponent<Props> = () => {
   const currentMediaType = useSelector(selectCurrentMediaType);
   const mediaImageBasePath = useSelector(selectMediaImageBasePath);
   const [media, setMedia] = useState(null);
-  const [recommendedMedia, setRecommendedMedia] = useState(null);
+  const [recommendedMedia, setRecommendedMedia] = useState([]);
   const [mediaPath, setMediaPath] = useState("");
 
   useEffect(() => {
@@ -71,7 +71,8 @@ const MediaDetailsPage: React.FunctionComponent<Props> = () => {
         <MediaDetails media={media} mediaPath={mediaPath}></MediaDetails>
       )}
       <h3 style={{ color: "white", padding: 20 }}>{`Recommended ${currentMediaType}`}</h3>
-      {recommendedMedia && <MediaList mediaList={recommendedMedia}></MediaList>}
+      {recommendedMedia.length && <MediaList mediaList={recommendedMedia}></MediaList>}
+      {!recommendedMedia.length && <div>No recommandations</div>}
     </>
   );
 };
