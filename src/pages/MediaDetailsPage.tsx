@@ -57,8 +57,6 @@ const MediaDetailsPage: React.FunctionComponent<Props> = () => {
   }, [currentMediaType, mediaId]);
 
   useEffect(() => {
-    console.log(mediaPath);
-
     if (media) {
       //@ts-ignore
       setMediaPath(getImagePath(mediaImageBasePath, media?.backdrop_path));

@@ -1,5 +1,5 @@
 .mediaDetails-card img {
-    max-height: 90vh; 
+    height: 90vh; 
     border-radius: 0;
 }
 
@@ -8,6 +8,9 @@ mediaDetails-card {
     border-radius: 0;
     position: relative;
 }
-.mediaDetails-card .mediaDetails-body {
+.mediaDetails-card.card-body {
     position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }

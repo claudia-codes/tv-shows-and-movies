@@ -10,9 +10,14 @@
 - The user should be able to see similar tv shows or movies in a section in the detail view.
 
 ## Improvements
-- [Elevate Image Path Retrieval](https://github.com/claudia-codes/tv-shows-and-movies/issues/1)
+[ ] Add unit tests
+[ ] Deploy to Firebase
+[ ] Further improve details view
+[ ] Caching of previously requested media details
+[ ] Add image placeholder when there is no media preview
+[x] [Elevate Image Path Retrieval](https://github.com/claudia-codes/tv-shows-and-movies/issues/1)
+[x] Improve image load
 
-  
 ## Available Scripts
 
 In the project directory, you can run:

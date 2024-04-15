@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { selectMediaImageBasePath } from "../store/mediaSlice";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import LazyLoad from "react-lazyload"
 
 import "./MediaList.css";
 
@@ -30,10 +31,12 @@ const MediaList: React.FunctionComponent<Props> = ({ mediaList }) => {
           <Container className="mediaList-row" fluid>
             <Row>
               <Col>
-                <Image
-                  className="mediaList-image"
-                  src={getImagePath(mediaImageBasePath, media.backdrop_path)}
-                />
+                <LazyLoad height={200} once>
+                  <Image
+                    className="mediaList-image"
+                    src={getImagePath(mediaImageBasePath, media.backdrop_path)}
+                  />
+                </LazyLoad>
               </Col>
               <Col xs={4}>
                 <h4>{media?.title || media?.name}</h4>
