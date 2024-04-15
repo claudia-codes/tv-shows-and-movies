@@ -4,11 +4,8 @@ import {
   selectPopularMedia,
   selectCurrentMediaType,
   setPopularMedia,
-  setMediaImageBasePath,
-  selectMediaImageBasePath,
 } from "../store/mediaSlice";
 import {
-  configPath,
   getMediaListPathByType,
 } from "../utils/urlComposer";
 import MediaCarousel from "../components/MediaCarousel";

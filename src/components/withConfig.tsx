@@ -7,12 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setMediaImageBasePath,
   selectMediaImageBasePath,
+  selectCurrentMediaType,
 } from "../store/mediaSlice";
 import { configPath } from "../utils/urlComposer";
 
 const withConfig = (WrappedComponent: React.FunctionComponent) => {
   const WithConfig = () => {
   const dispatch = useDispatch();
+  const currentMediaType = useSelector(selectCurrentMediaType);
 
     const mediaImageBasePath = useSelector(selectMediaImageBasePath);
     useEffect(() => {
@@ -26,8 +28,9 @@ const withConfig = (WrappedComponent: React.FunctionComponent) => {
           console.error("Error fetching config: ", error);
         }
       };
-      fetchConfig();
-    }, [dispatch, mediaImageBasePath]);
+      // fetch only if not present already in store
+      !currentMediaType && fetchConfig();
+    }, [currentMediaType, dispatch, mediaImageBasePath]);
 
     return <WrappedComponent></WrappedComponent>
   };
