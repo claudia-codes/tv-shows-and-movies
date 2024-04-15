@@ -30,7 +30,7 @@ const MediaCarousel: React.FunctionComponent<Props> = ({ mediaList }) => {
   return (
     <Carousel data-bs-theme="dark" className="mediaCarousel">
       {mediaList?.map((media: MediaItem) => (
-        <Carousel.Item>
+        <Carousel.Item key={media?.id}>
           <Card>
             <Card.Img
               variant="top"
